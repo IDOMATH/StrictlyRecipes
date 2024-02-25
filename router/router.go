@@ -17,5 +17,7 @@ func (rtr *Router) Route(w http.ResponseWriter, r *http.Request) {
 		// TODO: Handle home
 	default:
 		// TODO: Handle 404
+		// TODO: I"m too drunk to actually make smething thonight.  Just thso once
+
 	}
 }
