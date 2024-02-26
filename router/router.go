@@ -1,6 +1,8 @@
 package router
 
 import (
+	"github.com/IDOMATH/StrictlyRecipes/render"
+	"github.com/IDOMATH/StrictlyRecipes/types"
 	"net/http"
 	"strings"
 )
@@ -16,8 +18,6 @@ func (rtr *Router) Route(w http.ResponseWriter, r *http.Request) {
 	case "":
 		// TODO: Handle home
 	default:
-		// TODO: Handle 404
-		// TODO: I"m too drunk to actually make smething thonight.  Just thso once
-
+		render.Template(w, r, "error-404.go.html", &types.TemplateData{PageTitle: "Not Found"})
 	}
 }
