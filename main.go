@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/IDOMATH/StrictlyRecipes/router"
+	"github.com/IDOMATH/StrictlyRecipes/util"
 	"net/http"
 )
 
-const port = "8080"
-
 func main() {
+	port := util.EnvOrDefault("PORT", "8080")
+
 	rtr := router.NewRouter()
 	http.HandleFunc("/", rtr.Route)
 
