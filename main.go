@@ -1,14 +1,17 @@
 package main
 
 import (
+	"fmt"
+	"github.com/IDOMATH/StrictlyRecipes/router"
 	"net/http"
 )
 
-func main() {
-	http.HandleFunc("/", handleHome)
-	http.ListenAndServe(":8080", nil)
-}
+const port = "8080"
 
-func handleHome(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Welcome home"))
+func main() {
+	rtr := router.NewRouter()
+	http.HandleFunc("/", rtr.Route)
+
+	fmt.Println("Server running on port: ", port)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }
