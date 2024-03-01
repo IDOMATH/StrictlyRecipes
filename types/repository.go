@@ -1,9 +1,13 @@
 package types
 
-import "github.com/IDOMATH/StrictlyRecipes/handlers"
+import (
+	"github.com/IDOMATH/StrictlyRecipes/handlers"
+	"github.com/IDOMATH/StrictlyRecipes/router"
+)
 
 type Repository struct {
-	RH *handlers.RecipeHandler
+	Router *router.Router
+	RH     *handlers.RecipeHandler
 }
 
 func NewRepository() *Repository {

@@ -17,6 +17,16 @@ import (
 func main() {
 	port := util.EnvOrDefault("PORT", "8080")
 
+	repo := run()
+	
+	http.HandleFunc("/", repo.Router.Route)
+
+	fmt.Println("Server running on port: ", port)
+	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+}
+
+func run() *types.Repository {
+
 	mongoDbUri := util.EnvOrDefault("MONGODBURI", "mongodb://localhost:27017")
 	mongoDbName := util.EnvOrDefault("MONGODBNAME", "mongoRecipes")
 
@@ -31,9 +41,7 @@ func main() {
 
 	repository.RH = recipeHandler
 
-	rtr := router.NewRouter()
-	http.HandleFunc("/", rtr.Route)
+	repository.Router = router.NewRouter()
 
-	fmt.Println("Server running on port: ", port)
-	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+	return repository
 }
