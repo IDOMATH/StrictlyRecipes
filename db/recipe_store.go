@@ -17,7 +17,7 @@ type RecipeStore interface {
 	InsertRecipe(context.Context, *types.Recipe) (*types.Recipe, error)
 	GetAllRecipes(context.Context) ([]*types.Recipe, error)
 	GetRecipeById(context.Context, string) (*types.Recipe, error)
-	GetRecipesByAuthor(context.Context, string) ([]*types.Recipe, error)
+	//GetRecipesByAuthor(context.Context, string) ([]*types.Recipe, error)
 }
 
 type MongoRecipeStore struct {
