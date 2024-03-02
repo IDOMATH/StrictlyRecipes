@@ -1,4 +1,4 @@
-package types
+package repository
 
 import (
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
