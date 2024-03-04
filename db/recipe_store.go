@@ -17,7 +17,7 @@ type RecipeStore interface {
 	InsertRecipe(context.Context, *types.Recipe) (*types.Recipe, error)
 	GetAllRecipes(context.Context) ([]*types.Recipe, error)
 	GetRecipeById(context.Context, string) (*types.Recipe, error)
-	//GetRecipesByAuthor(context.Context, string) ([]*types.Recipe, error)
+	GetRecipesByAuthor(context.Context, string) ([]*types.Recipe, error)
 }
 
 type MongoRecipeStore struct {
@@ -68,4 +68,17 @@ func (s *MongoRecipeStore) GetRecipeById(ctx context.Context, id string) (*types
 		return nil, err
 	}
 	return &recipe, nil
+}
+
+func (s *MongoRecipeStore) GetRecipesByAuthor(ctx context.Context, author string) ([]*types.Recipe, error) {
+	res, err := s.collection.Find(ctx, bson.M{"author": author})
+	if err != nil {
+		return nil, err
+	}
+	var recipes []*types.Recipe
+	if err := res.All(ctx, &recipes); err != nil {
+		return nil, err
+	}
+
+	return recipes, nil
 }
