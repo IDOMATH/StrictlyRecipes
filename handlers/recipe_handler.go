@@ -31,3 +31,16 @@ func (h *RecipeHandler) HandleGetAllRecipes(w http.ResponseWriter, r *http.Reque
 
 	render.Template(w, r, "all-recipes.go.html", &types.TemplateData{PageTitle: "All Recipes"})
 }
+
+func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Request) {
+	c, cancelFunc := context.WithCancel(context.Background())
+	defer cancelFunc()
+
+	var id string
+
+	recipe, err := h.recipeStore.GetRecipeById(c, id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(recipe)
+}
