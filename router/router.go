@@ -21,9 +21,23 @@ func (rtr *Router) Route(w http.ResponseWriter, r *http.Request) {
 	switch url[rtr.urlIndex] {
 	case "":
 		handleHome(w, r)
+	case "recipes":
+		rtr.routeRecipes(w, r)
 	default:
 		render.Template(w, r, "error-404.go.html", &types.TemplateData{PageTitle: "Not Found"})
 	}
+}
+
+func (rtr *Router) routeRecipes(w http.ResponseWriter, r *http.Request) {
+	rtr.urlIndex++
+	url := strings.Split(r.URL.Path, "/")
+	switch url[rtr.urlIndex] {
+	case "":
+	// TODO: handle get all recipes
+	case ":id":
+		// TODO: handle get recipe by ID and do the regex on case
+	}
+
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {
