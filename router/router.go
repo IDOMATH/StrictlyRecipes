@@ -33,7 +33,7 @@ func (rtr *Router) routeRecipes(w http.ResponseWriter, r *http.Request) {
 	url := strings.Split(r.URL.Path, "/")
 	switch url[rtr.urlIndex] {
 	case "":
-	// TODO: handle get all recipes
+		render.Template(w, r, "all-recipes.go.html", &types.TemplateData{PageTitle: "All Recipes"})
 	case ":id":
 		// TODO: handle get recipe by ID and do the regex on case
 	}
