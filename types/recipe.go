@@ -7,6 +7,7 @@ type Recipe struct {
 	Ingredients  []Ingredient       `bson:"ingredients" json:"ingredients"`
 	Instructions []Instruction      `bson:"instructions" json:"instructions"`
 	Author       string             `bson:"author" json:"author"`
+	Thumbnail    string             `bson:"thumbnail" json:"thumbnail"`
 }
 
 type Ingredient struct {
