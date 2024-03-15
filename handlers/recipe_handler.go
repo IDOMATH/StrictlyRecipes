@@ -42,5 +42,6 @@ func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Reque
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(recipe)
+
+	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title})
 }
