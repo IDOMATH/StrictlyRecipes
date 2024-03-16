@@ -29,7 +29,7 @@ func (h *RecipeHandler) HandleGetAllRecipes(w http.ResponseWriter, r *http.Reque
 	objects := make(map[string]interface{})
 	objects["recipes"] = recipes
 
-	render.Template(w, r, "all-recipes.go.html", &types.TemplateData{PageTitle: "All Recipes"})
+	render.Template(w, r, "all-recipes.go.html", &types.TemplateData{PageTitle: "All Recipes", ObjectMap: objects})
 }
 
 func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Request) {
@@ -48,5 +48,5 @@ func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Reque
 	objects := make(map[string]interface{})
 	objects["recipe"] = recipes
 
-	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title})
+	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title, ObjectMap: objects})
 }
