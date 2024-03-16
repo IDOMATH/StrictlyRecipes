@@ -43,5 +43,10 @@ func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Reque
 		fmt.Println(err)
 	}
 
+	recipes, err := h.recipeStore.GetRecipeById(c, id)
+
+	objects := make(map[string]interface{})
+	objects["recipe"] = recipes
+
 	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title})
 }
