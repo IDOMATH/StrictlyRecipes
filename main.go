@@ -6,7 +6,6 @@ import (
 	"github.com/IDOMATH/StrictlyRecipes/db"
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
 	"github.com/IDOMATH/StrictlyRecipes/repository"
-	"github.com/IDOMATH/StrictlyRecipes/router"
 	"github.com/IDOMATH/StrictlyRecipes/util"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -19,7 +18,7 @@ func main() {
 
 	repo := run()
 
-	http.HandleFunc("/", repo.Router.Route)
+	http.HandleFunc("/", repo.Route)
 
 	fmt.Println("Server running on port: ", port)
 	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
@@ -40,8 +39,6 @@ func run() *repository.Repository {
 	recipeHandler := handlers.NewRecipeHandler(db.NewRecipeStore(client, mongoDbName))
 
 	repository.RH = recipeHandler
-
-	repository.Router = router.NewRouter()
 
 	return repository
 }
