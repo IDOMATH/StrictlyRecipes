@@ -42,7 +42,6 @@ func (repo *Repository) routeRecipes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	repo.RH.HandleGetAllRecipes(w, r)
-
 }
 
 func handleHome(w http.ResponseWriter, r *http.Request) {

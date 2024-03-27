@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"github.com/IDOMATH/StrictlyRecipes/db"
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
+	"github.com/IDOMATH/StrictlyRecipes/render"
 	"github.com/IDOMATH/StrictlyRecipes/repository"
+	"github.com/IDOMATH/StrictlyRecipes/types"
 	"github.com/IDOMATH/StrictlyRecipes/util"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,12 +18,21 @@ import (
 func main() {
 	port := util.EnvOrDefault("PORT", "8080")
 
-	repo := run()
+	router := http.NewServeMux()
 
-	http.HandleFunc("/", repo.Route)
+	server := http.Server{
+		Addr:    fmt.Sprintf(":%s", port),
+		Handler: router,
+	}
+
+	//repo := run()
+
+	router.HandleFunc("GET /", handleHome)
+	//http.HandleFunc("/", repo.Route)
 
 	fmt.Println("Server running on port: ", port)
-	http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+	log.Fatal(server.ListenAndServe())
+	//http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }
 
 func run() *repository.Repository {
@@ -41,4 +52,8 @@ func run() *repository.Repository {
 	repository.RH = recipeHandler
 
 	return repository
+}
+
+func handleHome(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "home.go.html", &types.TemplateData{PageTitle: "Home"})
 }
