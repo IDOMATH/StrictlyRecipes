@@ -25,7 +25,7 @@ func (repo *Repository) Route(w http.ResponseWriter, r *http.Request) {
 	url := strings.Split(r.URL.Path, "/")
 	switch url[repo.urlIndex] {
 	case "":
-		handleHome(w, r)
+		HandleHome(w, r)
 	case "recipes":
 		repo.routeRecipes(w, r)
 	default:
@@ -44,6 +44,6 @@ func (repo *Repository) routeRecipes(w http.ResponseWriter, r *http.Request) {
 	repo.RH.HandleGetAllRecipes(w, r)
 }
 
-func handleHome(w http.ResponseWriter, r *http.Request) {
+func (repo *Repository) HandleHome(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "home.go.html", &types.TemplateData{PageTitle: "Home"})
 }

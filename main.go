@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"github.com/IDOMATH/StrictlyRecipes/db"
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
-	"github.com/IDOMATH/StrictlyRecipes/render"
 	"github.com/IDOMATH/StrictlyRecipes/repository"
-	"github.com/IDOMATH/StrictlyRecipes/types"
 	"github.com/IDOMATH/StrictlyRecipes/util"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -25,9 +23,9 @@ func main() {
 		Handler: router,
 	}
 
-	//repo := run()
+	repo := run()
 
-	router.HandleFunc("GET /", handleHome)
+	router.HandleFunc("GET /", repo.HandleHome)
 	//http.HandleFunc("/", repo.Route)
 
 	fmt.Println("Server running on port: ", port)
@@ -52,8 +50,4 @@ func run() *repository.Repository {
 	repository.RH = recipeHandler
 
 	return repository
-}
-
-func handleHome(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "home.go.html", &types.TemplateData{PageTitle: "Home"})
 }
