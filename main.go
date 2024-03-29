@@ -26,7 +26,8 @@ func main() {
 	repo := run()
 
 	router.HandleFunc("GET /", repo.HandleHome)
-	//http.HandleFunc("/", repo.Route)
+	router.HandleFunc("GET /recipes", repo.RH.HandleGetAllRecipes)
+	router.HandleFunc("GET /recipes/{id}", repo.RH.HandleGetRecipeById)
 
 	fmt.Println("Server running on port: ", port)
 	log.Fatal(server.ListenAndServe())
