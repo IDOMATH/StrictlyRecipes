@@ -33,21 +33,18 @@ func (h *RecipeHandler) HandleGetAllRecipes(w http.ResponseWriter, r *http.Reque
 }
 
 func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Request) {
-	// This does work, but Goland doesn't seem to think it will.
 	id := r.PathValue("id")
-	fmt.Println(id)
-	//c, cancelFunc := context.WithCancel(context.Background())
-	//defer cancelFunc()
-	//
-	//recipe, err := h.recipeStore.GetRecipeById(c, id)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//
-	//recipes, err := h.recipeStore.GetRecipeById(c, id)
+
+	c, cancelFunc := context.WithCancel(context.Background())
+	defer cancelFunc()
+
+	recipe, err := h.recipeStore.GetRecipeById(c, id)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	objects := make(map[string]interface{})
-	//objects["recipe"] = recipes
+	objects["recipe"] = recipe
 
-	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: "recipe.Title", ObjectMap: objects})
+	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title, ObjectMap: objects})
 }
