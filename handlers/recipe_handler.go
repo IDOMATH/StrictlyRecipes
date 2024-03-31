@@ -48,3 +48,11 @@ func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Reque
 
 	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title, ObjectMap: objects})
 }
+
+func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func (h *RecipeHandler) HandlePostRecipeForm(w http.ResponseWriter, r *http.Request) {
+	
+}
