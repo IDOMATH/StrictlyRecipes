@@ -29,6 +29,9 @@ func main() {
 	router.HandleFunc("GET /recipes", repo.RH.HandleGetAllRecipes)
 	router.HandleFunc("GET /recipes/{id}", repo.RH.HandleGetRecipeById)
 
+	router.HandleFunc("GET /new-recipe", repo.RH.HandlePostRecipeForm)
+	router.HandleFunc("POST /new-recipe", repo.RH.HandlePostRecipe)
+
 	fmt.Println("Server running on port: ", port)
 	log.Fatal(server.ListenAndServe())
 	//http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
