@@ -26,3 +26,10 @@ func Logger(next http.Handler) http.Handler {
 		fmt.Println(r.Method, r.URL, time.Since(start))
 	})
 }
+
+func Authenticate(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Not Authenticated")
+		next.ServeHTTP(w, r)
+	})
+}
