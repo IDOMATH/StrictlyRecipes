@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/IDOMATH/StrictlyRecipes/db"
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
+	"github.com/IDOMATH/StrictlyRecipes/middleware"
 	"github.com/IDOMATH/StrictlyRecipes/repository"
 	"github.com/IDOMATH/StrictlyRecipes/util"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -18,9 +19,13 @@ func main() {
 
 	router := http.NewServeMux()
 
+	stack := middleware.CreateStack(
+		middleware.Logger,
+		middleware.Authenticate)
+
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%s", port),
-		Handler: router,
+		Handler: stack(router),
 	}
 
 	repo := run()
