@@ -56,3 +56,7 @@ func (h *RecipeHandler) HandleNewRecipeForm(w http.ResponseWriter, r *http.Reque
 func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request) {
 	//TODO:
 }
+
+func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request) {
+
+}
