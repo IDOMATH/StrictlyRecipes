@@ -60,3 +60,7 @@ func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request)
 func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request) {
 
 }
+
+func (h *RecipeHandler) HandleGetAuthorById(w http.ResponseWriter, r *http.Request) {
+	
+}
