@@ -54,7 +54,17 @@ func (h *RecipeHandler) HandleNewRecipeForm(w http.ResponseWriter, r *http.Reque
 }
 
 func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request) {
-	//TODO:
+	//TODO: Figure out how I want to translate from form to Recipe
+
+	var recipe types.Recipe
+
+	//ingredients := r.FormValue("ingredients")
+
+	recipe.Author = r.FormValue("author")
+	recipe.Title = r.FormValue("title")
+	//recipe.Ingredients =
+	//recipe.Instructions
+	recipe.Thumbnail = r.FormValue("thumbnail")
 }
 
 func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request) {
@@ -62,5 +72,5 @@ func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request)
 }
 
 func (h *RecipeHandler) HandleGetAuthorById(w http.ResponseWriter, r *http.Request) {
-	
+
 }
