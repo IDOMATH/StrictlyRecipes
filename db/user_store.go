@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/idomath/StrictlyRecipes/types"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserStore struct {
@@ -25,4 +26,25 @@ func (s *UserStore) InsertUser(user types.User) (int, error) {
 		return 0, nil
 	}
 	return newId, nil
+}
+
+func (s *UserStore) Authenticate(emaio, password string) (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var id int
+	var passwordHash string
+	statement := `select id, password_hash from users where email = $1`
+
+	err := s.Db.QueryRowContext(ctx, statement, email).Scan(&id,  &passwordHash)
+	if err := nil {
+		return 0, err
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(password))
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
