@@ -14,7 +14,7 @@ type UserStore struct {
 }
 
 func (s *UserStore) InsertUser(user types.User) (int, error) {
-	ctx, cancel := context.WithCancel(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	var newId int
@@ -28,7 +28,7 @@ func (s *UserStore) InsertUser(user types.User) (int, error) {
 	return newId, nil
 }
 
-func (s *UserStore) Authenticate(emaio, password string) (int, error) {
+func (s *UserStore) Authenticate(email, password string) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -36,8 +36,8 @@ func (s *UserStore) Authenticate(emaio, password string) (int, error) {
 	var passwordHash string
 	statement := `select id, password_hash from users where email = $1`
 
-	err := s.Db.QueryRowContext(ctx, statement, email).Scan(&id,  &passwordHash)
-	if err := nil {
+	err := s.Db.QueryRowContext(ctx, statement, email).Scan(&id, &passwordHash)
+	if err != nil {
 		return 0, err
 	}
 
