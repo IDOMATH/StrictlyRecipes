@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"net/http"
+
 	"github.com/IDOMATH/StrictlyRecipes/db"
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
 	"github.com/IDOMATH/StrictlyRecipes/middleware"
@@ -10,8 +13,6 @@ import (
 	"github.com/IDOMATH/StrictlyRecipes/util"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
-	"net/http"
 )
 
 func main() {
@@ -54,6 +55,21 @@ func run() *repository.Repository {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	dbHost := util.EnvOrDefault("DBHOST", "localhost")
+	dbPort := util.EnvOrDefault("DBPORT", "5432")
+	dbName := util.EnvOrDefault("DBNAME", "portfolio")
+	dbUser := util.EnvOrDefault("DBUSER", "postgres")
+	dbPass := util.EnvOrDefault("DBPASS", "postgres")
+	dbSsl := util.EnvOrDefault("DBSSL", "disable")
+
+	connectionString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s", dbHost, dbPort, dbName, dbUser, dbPass, dbSsl)
+	fmt.Println("Connecting to Postgres")
+	postgresDb, err := db.ConnectSQL(connectionString)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Connected to Postgres")
 
 	repository := repository.NewRepository()
 
