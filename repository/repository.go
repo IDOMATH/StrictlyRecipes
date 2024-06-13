@@ -1,10 +1,11 @@
 package repository
 
 import (
+	"net/http"
+
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
 	"github.com/IDOMATH/StrictlyRecipes/render"
 	"github.com/IDOMATH/StrictlyRecipes/types"
-	"net/http"
 )
 
 type Repository struct {
