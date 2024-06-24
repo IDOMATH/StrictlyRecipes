@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+
 	"github.com/IDOMATH/StrictlyRecipes/types"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -81,4 +82,16 @@ func (s *MongoRecipeStore) GetRecipesByAuthor(ctx context.Context, author string
 	}
 
 	return recipes, nil
+}
+
+func (s *MongoRecipeStore) GetAllAuthors(ctx context.Context) ([]string, error) {
+	res, err := s.collection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, err
+	}
+	var authors []string
+	if err := res.All(ctx, &authors); err != nil {
+		return nil, err
+	}
+	return authors, nil
 }
