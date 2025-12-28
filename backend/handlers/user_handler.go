@@ -25,3 +25,5 @@ func (*UserHandler) HandlePostUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func (*UserHandler) HandleAuthenticate(w http.ResponseWriter, r *http.Request) {}
