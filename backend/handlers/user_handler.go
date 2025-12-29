@@ -26,4 +26,13 @@ func (*UserHandler) HandlePostUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (*UserHandler) HandleAuthenticate(w http.ResponseWriter, r *http.Request) {}
+func (*UserHandler) HandleLogin(w http.ResponseWriter, r *http.Request) {
+
+	var user types.NewUser
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		// log.Error("HandlePostUser", "error decoding user to json from body", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+}
