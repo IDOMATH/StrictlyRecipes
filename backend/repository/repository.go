@@ -10,6 +10,7 @@ import (
 
 type Repository struct {
 	RH *handlers.RecipeHandler
+	UH *handlers.UserHandler
 }
 
 func NewRepository() *Repository {
