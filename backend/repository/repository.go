@@ -6,11 +6,13 @@ import (
 	"github.com/IDOMATH/StrictlyRecipes/handlers"
 	"github.com/IDOMATH/StrictlyRecipes/render"
 	"github.com/IDOMATH/StrictlyRecipes/types"
+	"github.com/IDOMATH/session/memorystore"
 )
 
 type Repository struct {
-	RH *handlers.RecipeHandler
-	UH *handlers.UserHandler
+	RH      *handlers.RecipeHandler
+	UH      *handlers.UserHandler
+	Session *memorystore.MemoryStore[string]
 }
 
 func NewRepository() *Repository {

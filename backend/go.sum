@@ -1,3 +1,5 @@
+github.com/IDOMATH/session v0.0.0-20250717031237-eaa4d24abcea h1:jhuSbZrd6q7FPfSITpAFychUPFqL3PsIoSS0aj89V38=
+github.com/IDOMATH/session v0.0.0-20250717031237-eaa4d24abcea/go.mod h1:+n0Dj1Z8SmmUNPxyXXqo2d1V+tyGpkXkCU/teExlm4E=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/golang/snappy v0.0.1 h1:Qgr9rKW7uDUkrbSmQeiDsGa8SjGyCOGtuasMWwvp2P4=

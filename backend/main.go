@@ -11,6 +11,7 @@ import (
 	"github.com/IDOMATH/StrictlyRecipes/middleware"
 	"github.com/IDOMATH/StrictlyRecipes/repository"
 	"github.com/IDOMATH/StrictlyRecipes/util"
+	"github.com/IDOMATH/session/memorystore"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -73,9 +74,13 @@ func run() *repository.Repository {
 
 	repository := repository.NewRepository()
 
+	repository.Session = memorystore.New[string]()
+
 	recipeHandler := handlers.NewRecipeHandler(db.NewRecipeStore(client, mongoDbName))
+	userHandler := handlers.NewUserHandler(db.NewUserStore(postgresDb.SQL))
 
 	repository.RH = recipeHandler
+	repository.UH = userHandler
 
 	return repository
 }
