@@ -3,7 +3,10 @@ package middleware
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
+
+	"github.com/IDOMATH/StrictlyRecipes/repository"
 )
 
 type Middleware func(handler http.Handler) http.Handler
@@ -27,9 +30,30 @@ func Logger(next http.Handler) http.Handler {
 	})
 }
 
-func Authenticate(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Not Authenticated")
-		next.ServeHTTP(w, r)
-	})
+func Authenticate(repo *repository.Repository) Middleware {
+	return func(next http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			// Make and hook up session storage to repository
+			t, found := repo.Session.Get(r.Header.Get("cheetauth"))
+			if !found {
+				fmt.Println("NOT AUTHENTICATED")
+				// Potentially do some rerouting if the endpoint is protected
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(r.Header.Get("cheetauth")))
+				return
+			}
+			id, err := strconv.Atoi(t)
+			if err != nil {
+				fmt.Println("error converting token id to int")
+				// Potentially do some rerouting if the endpoint is protected
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(r.Header.Get("cheetauth")))
+				return
+
+			}
+			fmt.Println(id)
+
+			next(w, r)
+		}
+	}
 }
