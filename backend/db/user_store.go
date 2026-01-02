@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/idomath/StrictlyRecipes/types"
+	"github.com/IDOMATH/StrictlyRecipes/types"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -25,7 +25,7 @@ func (s *UserStore) InsertUser(user types.User) (int, error) {
 	statement := `insert into users (email, password_hash)
 				  values ($1, $2) returning id`
 
-	err := s.Db.QueryRowContext(ctx, statement, user.email, user.PasswordHash)
+	err := s.Db.QueryRowContext(ctx, statement, user.Email, user.PasswordHash)
 	if err != nil {
 		return 0, nil
 	}

@@ -9,10 +9,10 @@ import (
 	"github.com/IDOMATH/StrictlyRecipes/repository"
 )
 
-type Middleware func(handler http.Handler) http.Handler
+type Middleware func(http.HandlerFunc) http.HandlerFunc
 
 func CreateStack(stack ...Middleware) Middleware {
-	return func(next http.Handler) http.Handler {
+	return func(next http.HandlerFunc) http.HandlerFunc {
 		for i := len(stack) - 1; i >= 0; i-- {
 			mw := stack[i]
 			next = mw(next)
@@ -22,7 +22,7 @@ func CreateStack(stack ...Middleware) Middleware {
 	}
 }
 
-func Logger(next http.Handler) http.Handler {
+func Logger(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		next.ServeHTTP(w, r)
