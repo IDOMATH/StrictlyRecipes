@@ -11,6 +11,13 @@ import (
 
 type Middleware func(http.HandlerFunc) http.HandlerFunc
 
+func Use(handler http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
+	for _, m := range middlewares {
+		handler = m(handler)
+	}
+	return handler
+}
+
 func CreateStack(stack ...Middleware) Middleware {
 	return func(next http.HandlerFunc) http.HandlerFunc {
 		for i := len(stack) - 1; i >= 0; i-- {

@@ -21,18 +21,18 @@ func main() {
 
 	router := http.NewServeMux()
 
+	repo := run()
+
 	stack := middleware.CreateStack(
 		middleware.Logger,
-		middleware.Authenticate)
+		middleware.Authenticate(repo))
 
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%s", port),
-		Handler: stack(router),
+		Handler: router,
 	}
 
-	repo := run()
-
-	router.HandleFunc("GET /", repo.HandleHome)
+	router.HandleFunc("GET /", middleware.Use(repo.HandleHome, stack))
 	router.HandleFunc("GET /recipes", repo.RH.HandleGetAllRecipes)
 	router.HandleFunc("GET /recipes/{id}", repo.RH.HandleGetRecipeById)
 
