@@ -33,7 +33,7 @@ func main() {
 	}
 
 	router.HandleFunc("GET /", middleware.Use(repo.HandleHome, stack))
-	router.HandleFunc("GET /recipes", repo.RH.HandleGetAllRecipes)
+	router.HandleFunc("GET /recipes", middleware.Use(repo.RH.HandleGetAllRecipes, stack))
 	router.HandleFunc("GET /recipes/{id}", repo.RH.HandleGetRecipeById)
 
 	router.HandleFunc("GET /new-recipe", repo.RH.HandleNewRecipeForm)
