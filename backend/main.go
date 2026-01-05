@@ -37,7 +37,7 @@ func main() {
 	router.HandleFunc("GET /recipes/{id}", repo.RH.HandleGetRecipeById)
 
 	router.HandleFunc("GET /new-recipe", repo.RH.HandleNewRecipeForm)
-	router.HandleFunc("POST /new-recipe", repo.RH.HandlePostRecipe)
+	router.HandleFunc("POST /new-recipe", middleware.Use(repo.RH.HandlePostRecipe, stack))
 
 	router.HandleFunc("GET /authors", repo.RH.HandleGetAuthors)
 	router.HandleFunc("GET /authors/{id}", repo.RH.HandleGetAuthorById)
