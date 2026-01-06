@@ -3,10 +3,11 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"net/http"
+
 	"github.com/IDOMATH/StrictlyRecipes/db"
 	"github.com/IDOMATH/StrictlyRecipes/render"
 	"github.com/IDOMATH/StrictlyRecipes/types"
-	"net/http"
 )
 
 type RecipeHandler struct {
@@ -65,6 +66,8 @@ func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request)
 	//recipe.Ingredients =
 	//recipe.Instructions
 	recipe.Thumbnail = r.FormValue("thumbnail")
+
+	h.recipeStore.InsertRecipe(context.Background(), &recipe)
 }
 
 func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request) {
