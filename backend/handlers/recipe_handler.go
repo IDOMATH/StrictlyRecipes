@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -44,10 +45,12 @@ func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Reque
 		fmt.Println(err)
 	}
 
-	objects := make(map[string]interface{})
-	objects["recipe"] = recipe
-
-	render.Template(w, r, "recipe.go.html", &types.TemplateData{PageTitle: recipe.Title, ObjectMap: objects})
+	recipeJson, err := json.Marshal(recipe)
+	if err != nil {
+		// log error and return a useful status code
+		return
+	}
+	w.Write(recipeJson)
 }
 
 func (h *RecipeHandler) HandleNewRecipeForm(w http.ResponseWriter, r *http.Request) {
