@@ -50,6 +50,8 @@ func (h *RecipeHandler) HandleGetRecipeById(w http.ResponseWriter, r *http.Reque
 		// log error and return a useful status code
 		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 	w.Write(recipeJson)
 }
 
@@ -71,6 +73,7 @@ func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request)
 	recipe.Thumbnail = r.FormValue("thumbnail")
 
 	h.recipeStore.InsertRecipe(context.Background(), &recipe)
+	w.WriteHeader(http.StatusCreated)
 }
 
 func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request) {
