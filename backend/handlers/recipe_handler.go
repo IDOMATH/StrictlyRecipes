@@ -82,4 +82,6 @@ func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request)
 
 func (h *RecipeHandler) HandleGetAuthorById(w http.ResponseWriter, r *http.Request) {
 
+	id := r.PathValue("id")
+	h.recipeStore.GetRecipesByAuthor(context.Background(), id)
 }
