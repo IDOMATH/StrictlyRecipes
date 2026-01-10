@@ -83,5 +83,17 @@ func (h *RecipeHandler) HandleGetAuthors(w http.ResponseWriter, r *http.Request)
 func (h *RecipeHandler) HandleGetAuthorById(w http.ResponseWriter, r *http.Request) {
 
 	id := r.PathValue("id")
-	h.recipeStore.GetRecipesByAuthor(context.Background(), id)
+	recipes, err := h.recipeStore.GetRecipesByAuthor(context.Background(), id)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	recipesJson, err := json.Marshal(recipes)
+	if err != nil {
+		// log error and return a useful status code
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(recipesJson)
 }
