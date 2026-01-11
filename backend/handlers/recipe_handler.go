@@ -72,7 +72,11 @@ func (h *RecipeHandler) HandlePostRecipe(w http.ResponseWriter, r *http.Request)
 	//recipe.Instructions
 	recipe.Thumbnail = r.FormValue("thumbnail")
 
-	h.recipeStore.InsertRecipe(context.Background(), &recipe)
+	_, err := h.recipeStore.InsertRecipe(context.Background(), &recipe)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusCreated)
 }
 
@@ -91,6 +95,7 @@ func (h *RecipeHandler) HandleGetAuthorById(w http.ResponseWriter, r *http.Reque
 	recipesJson, err := json.Marshal(recipes)
 	if err != nil {
 		// log error and return a useful status code
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
